@@ -1,0 +1,699 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yohan Barber — Miami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #0b231b;
+    --green-850: #0f2c22;
+    --green-800: #143a2c;
+    --green-700: #1d5040;
+    --gold: #c6a15b;
+    --gold-light: #ddbf82;
+    --gold-deep: #a9854a;
+    --cream: #f5f1e8;
+    --cream-2: #efe9da;
+    --ink: #18221c;
+    --muted: #6f7a72;
+    --line: rgba(198, 161, 91, 0.32);
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--cream);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: min(1180px, 90vw); margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 34px; height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+  .eyebrow.center { justify-content: center; }
+  .eyebrow.center::after {
+    content: "";
+    width: 34px; height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.04; letter-spacing: -0.01em; }
+
+  /* ---------- Placeholder ---------- */
+  .ph {
+    position: relative;
+    background-color: var(--green-850);
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(198,161,91,0.10) 0,
+      rgba(198,161,91,0.10) 1px,
+      transparent 1px,
+      transparent 11px
+    );
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .ph span {
+    font-family: "SFMono-Regular", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(221,191,130,0.78);
+    text-align: center;
+    padding: 8px 14px;
+    border: 1px solid rgba(221,191,130,0.32);
+    border-radius: 2px;
+    background: rgba(11,35,27,0.5);
+  }
+
+  /* ---------- Logo badge ---------- */
+  .logo-badge {
+    background: var(--green-900);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex: none;
+  }
+  .logo-badge svg { display: block; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 11px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 16px 30px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .3s ease;
+    border: 1px solid transparent;
+  }
+  .btn-gold { background: var(--gold); color: var(--green-900); }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { border-color: var(--line); color: var(--cream); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+  .btn-outline.dark { color: var(--ink); border-color: rgba(24,34,28,0.25); }
+  .btn-outline.dark:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    transition: background .4s ease, padding .4s ease, border-color .4s ease;
+    border-bottom: 1px solid transparent;
+    padding: 22px 0;
+  }
+  header.nav.scrolled {
+    background: rgba(11,35,27,0.92);
+    backdrop-filter: blur(10px);
+    padding: 14px 0;
+    border-bottom-color: var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 13px; color: var(--cream); }
+  .brand-mark {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--gold), 0 4px 14px rgba(0,0,0,0.3);
+  }
+  .hero-badge {
+    width: 96px; height: 96px; border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--line), 0 12px 34px rgba(0,0,0,0.45);
+    margin-bottom: 28px;
+  }
+  .foot-logo {
+    width: 66px; height: 66px; border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--line);
+    margin-bottom: 16px;
+  }
+  .brand-name { font-family: var(--serif); font-size: 23px; font-weight: 600; letter-spacing: 0.02em; line-height: 1; white-space: nowrap; }
+  .brand-name small { display: block; font-family: var(--sans); font-size: 9px; font-weight: 400; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+  nav.links { display: flex; align-items: center; gap: 36px; }
+  nav.links a {
+    color: rgba(245,241,232,0.82);
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400;
+    transition: color .25s ease;
+  }
+  nav.links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--gold); color: var(--gold-light);
+    padding: 11px 20px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: all .3s ease;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--green-900); }
+  .burger { display: none; background: none; border: 0; color: var(--cream); cursor: pointer; padding: 6px; }
+  .burger svg { width: 26px; height: 26px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    background: var(--green-900);
+    color: var(--cream);
+    padding: 168px 0 96px;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 90% at 80% 0%, rgba(198,161,91,0.10), transparent 55%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 70px; align-items: center;
+  }
+  .hero h1 { font-size: clamp(46px, 7vw, 92px); margin: 26px 0 0; color: var(--cream); }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p.lead { font-size: 18px; font-weight: 300; color: rgba(245,241,232,0.74); max-width: 30ch; margin-top: 26px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
+  .hero-meta { display: flex; gap: 38px; margin-top: 54px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .hero-meta .stat strong { font-family: var(--serif); font-size: 34px; font-weight: 600; color: var(--gold-light); display: block; line-height: 1; }
+  .hero-meta .stat span { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,241,232,0.6); margin-top: 8px; display: block; }
+
+  .hero-photo {
+    position: relative; aspect-ratio: 4/5; border: 1px solid var(--line);
+  }
+  .hero-photo .ph { position: absolute; inset: 0; }
+  .hero-photo::before {
+    content: ""; position: absolute; left: -14px; top: -14px; width: 60px; height: 60px;
+    border-left: 1px solid var(--gold); border-top: 1px solid var(--gold); z-index: 3;
+  }
+  .hero-photo::after {
+    content: ""; position: absolute; right: -14px; bottom: -14px; width: 60px; height: 60px;
+    border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); z-index: 3;
+  }
+
+  /* ---------- Marquee strip ---------- */
+  .strip { background: var(--gold); color: var(--green-900); padding: 16px 0; overflow: hidden; }
+  .strip-track { display: flex; gap: 0; white-space: nowrap; animation: marq 28s linear infinite; }
+  .strip-track span { font-family: var(--serif); font-size: 19px; font-weight: 600; font-style: italic; padding: 0 30px; display: inline-flex; align-items: center; gap: 30px; }
+  .strip-track span::after { content: "✦"; font-size: 12px; font-style: normal; }
+  @keyframes marq { to { transform: translateX(-50%); } }
+
+  /* ---------- Sections ---------- */
+  section { padding: 110px 0; }
+  .section-head { text-align: center; margin-bottom: 64px; }
+  .section-head h2 { font-size: clamp(36px, 5vw, 58px); margin-top: 18px; }
+  .section-head p { color: var(--muted); max-width: 52ch; margin: 18px auto 0; font-size: 16px; }
+
+  /* About */
+  .about { background: var(--cream); }
+  .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; align-items: center; }
+  .about-photo { aspect-ratio: 3/4; position: relative; }
+  .about-photo .ph { position: absolute; inset: 0; }
+  .about h2 { font-size: clamp(34px, 4.6vw, 54px); margin: 20px 0 0; }
+  .about p { color: #4a544c; margin-top: 22px; font-size: 17px; max-width: 46ch; }
+  .about .sign { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--gold-deep); margin-top: 26px; }
+
+  /* Services */
+  .services { background: var(--green-900); color: var(--cream); }
+  .services .section-head h2 { color: var(--cream); }
+  .services .section-head p { color: rgba(245,241,232,0.6); }
+  .svc-list { max-width: 880px; margin: 0 auto; }
+  .svc {
+    display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 20px;
+    padding: 26px 4px; border-bottom: 1px solid rgba(198,161,91,0.22);
+  }
+  .svc .svc-name { display: flex; align-items: baseline; gap: 16px; }
+  .svc h3 { font-size: 27px; font-weight: 500; color: var(--cream); }
+  .svc .dur { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,241,232,0.5); }
+  .svc .desc { display: block; font-family: var(--sans); font-size: 14px; color: rgba(245,241,232,0.55); margin-top: 6px; max-width: 44ch; }
+  .svc .price { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--gold-light); white-space: nowrap; }
+  .svc-note { text-align: center; font-size: 13px; color: rgba(245,241,232,0.45); margin-top: 36px; letter-spacing: 0.04em; }
+
+  /* Gallery */
+  .gallery { background: var(--cream-2); }
+  .gal-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 16px; }
+  .gal-grid .ph { aspect-ratio: 1; border: 1px solid rgba(20,58,44,0.12); }
+  .gal-grid .tall { grid-row: span 2; aspect-ratio: auto; }
+  .gal-item { overflow: hidden; aspect-ratio: 1; }
+  .gal-item.tall { grid-row: span 2; aspect-ratio: auto; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .gal-item:hover img { transform: scale(1.04); }
+  .gal-cta { text-align: center; margin-top: 44px; }
+  .gal-cta a { display: inline-flex; align-items: center; gap: 10px; color: var(--green-800); font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 5px; transition: color .25s; }
+  .gal-cta a:hover { color: var(--gold-deep); }
+
+  /* Reviews */
+  .reviews { background: var(--cream); }
+  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .rev {
+    background: #fff; border: 1px solid rgba(20,58,44,0.10); padding: 38px 32px;
+    display: flex; flex-direction: column;
+  }
+  .rev .stars { color: var(--gold); letter-spacing: 4px; font-size: 14px; }
+  .rev p { font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.4; color: var(--ink); margin: 20px 0 26px; flex: 1; }
+  .rev .who { display: flex; align-items: center; gap: 13px; }
+  .rev .av { width: 42px; height: 42px; border-radius: 50%; background: var(--green-800); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 18px; flex: none; }
+  .rev .who b { font-weight: 500; font-size: 15px; display: block; }
+  .rev .who small { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; }
+
+  /* Visit / hours + location */
+  .visit { background: var(--green-900); color: var(--cream); }
+  .visit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: stretch; }
+  .visit h2 { color: var(--cream); }
+  .hours-list { margin-top: 30px; }
+  .hours-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid rgba(198,161,91,0.18); }
+  .hours-row span:first-child { font-size: 16px; letter-spacing: 0.04em; }
+  .hours-row span:last-child { font-family: var(--serif); font-size: 19px; color: var(--gold-light); }
+  .hours-row.closed span:last-child { color: rgba(245,241,232,0.42); font-style: italic; }
+  .visit-info { margin-top: 34px; display: flex; flex-direction: column; gap: 18px; }
+  .vinfo { display: flex; gap: 15px; align-items: flex-start; }
+  .vinfo .ic { width: 40px; height: 40px; flex: none; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold-light); }
+  .vinfo .ic svg { width: 18px; height: 18px; }
+  .vinfo b { font-weight: 500; font-size: 16px; display: block; }
+  .vinfo span.sub { color: rgba(245,241,232,0.6); font-size: 14px; }
+  .map { position: relative; min-height: 380px; border: 1px solid var(--line); overflow: hidden; }
+  .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(0.3) contrast(0.95); }
+
+  /* CTA band */
+  .cta-band { background: var(--gold); color: var(--green-900); text-align: center; padding: 86px 0; }
+  .cta-band h2 { font-size: clamp(36px, 5vw, 62px); }
+  .cta-band p { font-size: 17px; margin: 18px auto 36px; max-width: 44ch; color: rgba(11,35,27,0.78); }
+  .btn-dark { background: var(--green-900); color: var(--gold-light); }
+  .btn-dark:hover { background: var(--green-800); transform: translateY(-2px); }
+
+  /* Footer */
+  footer.foot { background: var(--green-850); color: rgba(245,241,232,0.7); padding: 64px 0 30px; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 36px; padding-bottom: 40px; border-bottom: 1px solid rgba(198,161,91,0.18); }
+  .foot .brand-name { color: var(--cream); }
+  .foot-col h4 { font-family: var(--sans); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-weight: 500; }
+  .foot-col a, .foot-col p { display: block; color: rgba(245,241,232,0.7); font-size: 14px; margin-bottom: 9px; transition: color .25s; }
+  .foot-col a:hover { color: var(--gold-light); }
+  .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; padding-top: 24px; font-size: 12px; letter-spacing: 0.06em; color: rgba(245,241,232,0.45); }
+
+  /* Floating WhatsApp */
+  .wa-float {
+    position: fixed; right: 22px; bottom: 22px; z-index: 60;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #25d366; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    transition: transform .3s ease;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  .wa-float svg { width: 32px; height: 32px; }
+  .wa-float .pulse { position: absolute; inset: 0; border-radius: 50%; background: #25d366; opacity: 0.55; animation: pulse 2.4s ease-out infinite; z-index: -1; }
+  @keyframes pulse { 0% { transform: scale(1); opacity: .5; } 100% { transform: scale(1.9); opacity: 0; } }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Mobile menu panel */
+  .mobile-menu { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .strip-track, .wa-float .pulse { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 900px) {
+    nav.links { display: none; }
+    .nav-cta { display: none; }
+    .burger { display: block; }
+    .hero { padding: 130px 0 72px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-photo { max-width: 380px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-photo { max-width: 420px; }
+    .gal-grid { grid-template-columns: repeat(2, 1fr); }
+    .gal-grid .tall { grid-row: span 1; }
+    .rev-grid { grid-template-columns: 1fr; }
+    .visit-grid { grid-template-columns: 1fr; gap: 38px; }
+    section { padding: 78px 0; }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 55; background: var(--green-900);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+      opacity: 0; pointer-events: none; transition: opacity .35s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a { color: var(--cream); font-family: var(--serif); font-size: 30px; }
+    .mobile-menu .btn { margin-top: 16px; }
+    .mobile-menu .close { position: absolute; top: 24px; right: 26px; background: none; border: 0; color: var(--cream); font-size: 30px; cursor: pointer; }
+  }
+
+  @media (max-width: 560px) {
+    .hero-meta { gap: 24px; flex-wrap: wrap; }
+    .svc { grid-template-columns: 1fr; gap: 6px; }
+    .svc .price { font-size: 26px; }
+    .gal-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-top { flex-direction: column; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark logo-badge" style="width:48px;height:48px;box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.3)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="#c6a15b" stroke-width="1"/>
+          <text x="14" y="20" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#ddbf82" text-anchor="middle">Y</text>
+        </svg>
+      </span>
+      <span class="brand-name">Yohan Barber<small>Barbería · Miami</small></span>
+    </a>
+    <nav class="links">
+      <a href="#about">Barbero</a>
+      <a href="#services">Servicios</a>
+      <a href="#gallery">Galería</a>
+      <a href="#reviews">Reseñas</a>
+      <a href="#visit">Visítanos</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita%20en%20Yohan%20Barber" target="_blank" rel="noopener">Reservar</a>
+    <button class="burger" id="burger" aria-label="Menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="closeMenu" aria-label="Cerrar">×</button>
+  <a href="#about">Barbero</a>
+  <a href="#services">Servicios</a>
+  <a href="#gallery">Galería</a>
+  <a href="#reviews">Reseñas</a>
+  <a href="#visit">Visítanos</a>
+  <a class="btn btn-gold" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <span class="hero-badge logo-badge" style="width:96px;height:96px;box-shadow:0 0 0 1px var(--line),0 12px 34px rgba(0,0,0,0.45);margin-bottom:28px">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#c6a15b" stroke-width="1.5"/>
+          <text x="28" y="40" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#ddbf82" text-anchor="middle">Y</text>
+        </svg>
+      </span>
+      <span class="eyebrow">Barbería de autor · Miami</span>
+      <h1>El arte del <em>corte</em><br>y la barba.</h1>
+      <p class="lead">Cortes a medida, fades impecables y afeitado clásico a navaja. Una experiencia de barbería pensada al detalle.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita%20en%20Yohan%20Barber" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.043z"/></svg>
+          Reservar cita
+        </a>
+        <a class="btn btn-outline" href="#services">Ver servicios</a>
+      </div>
+      <div class="hero-meta">
+        <div class="stat"><strong>8+</strong><span>Años de oficio</span></div>
+        <div class="stat"><strong>2K+</strong><span>Cortes realizados</span></div>
+        <div class="stat"><strong>5.0</strong><span>Valoración media</span></div>
+      </div>
+    </div>
+    <div class="hero-photo reveal">
+      <div class="ph"><span>Foto principal<br>barbero en acción</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STRIP ===================== -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>Fade &amp; Skin Fade</span><span>Barba a navaja</span><span>Diseño de líneas</span><span>Afeitado clásico</span><span>Corte clásico</span><span>Color &amp; gris</span>
+    <span>Fade &amp; Skin Fade</span><span>Barba a navaja</span><span>Diseño de líneas</span><span>Afeitado clásico</span><span>Corte clásico</span><span>Color &amp; gris</span>
+  </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal">
+      <div class="ph"><span>Retrato del<br>barbero</span></div>
+    </div>
+    <div class="about-copy reveal">
+      <span class="eyebrow">El barbero</span>
+      <h2>Manos que entienden tu estilo.</h2>
+      <p>Detrás de cada corte hay precisión, paciencia y oficio. Más que una barbería, es un espacio donde cuidamos el detalle: desde el degradado perfecto hasta el último contorno de la barba.</p>
+      <p>Cada cliente sale con el corte que pidió —y la confianza que merece.</p>
+      <p class="sign">— Tu barbero de confianza en Miami</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow center">Carta de servicios</span>
+      <h2>Servicios y precios</h2>
+      <p>Precios de ejemplo, totalmente ajustables. Dime los reales y los actualizo en un momento.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Corte de cabello</h3><span class="dur">45 min</span></div>
+          <span class="desc">Corte a medida, lavado y peinado con producto.</span>
+        </div>
+        <span class="price">$25</span>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Corte + Barba</h3><span class="dur">60 min</span></div>
+          <span class="desc">El combo completo: corte, perfilado y arreglo de barba.</span>
+        </div>
+        <span class="price">$35</span>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Arreglo de barba</h3><span class="dur">30 min</span></div>
+          <span class="desc">Perfilado, recorte y toalla caliente con aceites.</span>
+        </div>
+        <span class="price">$18</span>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Afeitado clásico a navaja</h3><span class="dur">40 min</span></div>
+          <span class="desc">Ritual de afeitado con toalla caliente y navaja.</span>
+        </div>
+        <span class="price">$22</span>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Diseño y líneas</h3><span class="dur">20 min</span></div>
+          <span class="desc">Detalles, contornos y diseños personalizados.</span>
+        </div>
+        <span class="price">$30</span>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-name-wrap">
+          <div class="svc-name"><h3>Corte infantil</h3><span class="dur">30 min</span></div>
+          <span class="desc">Para los más pequeños, con toda la paciencia.</span>
+        </div>
+        <span class="price">$18</span>
+      </div>
+    </div>
+    <p class="svc-note reveal">* Precios de ejemplo en USD. Consulta promociones por WhatsApp.</p>
+  </div>
+</section>
+
+<!-- ===================== GALLERY ===================== -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow center">Trabajos</span>
+      <h2>Galería de cortes</h2>
+      <p>Aquí van las fotos reales del Instagram. Mándame las imágenes y las coloco en estos espacios.</p>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-item reveal tall"><img src="images/foto1.png" alt="Corte 1" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 01</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto2.png" alt="Corte 2" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 02</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto3.png" alt="Corte 3" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 03</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto4.png" alt="Corte 4" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 04</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto5.png" alt="Corte 5" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 05</span>'"></div>
+      <div class="gal-item reveal tall"><img src="images/foto6.png" alt="Corte 6" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 06</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto7.png" alt="Corte 7" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 07</span>'"></div>
+      <div class="gal-item reveal"><img src="images/foto8.jpeg" alt="Corte 8" onerror="this.parentElement.classList.add('ph');this.style.display='none';this.parentElement.innerHTML='<span>Foto 08</span>'"></div>
+    </div>
+    <div class="gal-cta reveal">
+      <a href="https://instagram.com/yohan_barber_pinar" id="igLink" target="_blank" rel="noopener">Ver más en Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REVIEWS ===================== -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow center">Lo que dicen</span>
+      <h2>Reseñas de clientes</h2>
+      <p>Ejemplos de testimonios. Cuando tengas reseñas reales, las cambiamos.</p>
+    </div>
+    <div class="rev-grid">
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"El mejor fade que me han hecho en Miami. Atención al detalle de otro nivel."</p>
+        <div class="who"><span class="av">C</span><div><b>Carlos M.</b><small>Cliente desde 2023</small></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Entré sin saber qué corte quería y salí encantado. Un crack con la navaja."</p>
+        <div class="who"><span class="av">J</span><div><b>Javier R.</b><small>Cliente habitual</small></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Puntual, profesional y el ambiente es de lujo. No me corto con nadie más."</p>
+        <div class="who"><span class="av">D</span><div><b>Daniel P.</b><small>Cliente desde 2022</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VISIT ===================== -->
+<section class="visit" id="visit">
+  <div class="wrap visit-grid">
+    <div class="reveal">
+      <span class="eyebrow">Visítanos</span>
+      <h2>Horarios y ubicación</h2>
+      <div class="hours-list">
+        <div class="hours-row"><span>Lunes – Viernes</span><span>9:00 – 19:00</span></div>
+        <div class="hours-row"><span>Sábado</span><span>9:00 – 17:00</span></div>
+        <div class="hours-row closed"><span>Domingo</span><span>Cerrado</span></div>
+      </div>
+      <div class="visit-info">
+        <div class="vinfo">
+          <span class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </span>
+          <div><b>Miami, Florida</b><span class="sub">Dirección exacta — la añadimos cuando esté el local.</span></div>
+        </div>
+        <div class="vinfo">
+          <span class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </span>
+          <div><b>(786) 865-6876</b><span class="sub">Llamadas y WhatsApp</span></div>
+        </div>
+      </div>
+      <a class="btn btn-gold" style="margin-top:32px" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita%20en%20Yohan%20Barber" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+    </div>
+    <div class="map reveal">
+      <iframe title="Mapa Miami" loading="lazy" src="https://www.google.com/maps?q=Miami,+Florida&z=11&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA BAND ===================== -->
+<section class="cta-band">
+  <div class="wrap reveal">
+    <h2>¿Listo para tu próximo corte?</h2>
+    <p>Reserva tu cita en segundos por WhatsApp. Sin esperas, sin complicaciones.</p>
+    <a class="btn btn-dark" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita%20en%20Yohan%20Barber" target="_blank" rel="noopener">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.043z"/></svg>
+      Reservar ahora
+    </a>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-col" style="max-width:300px">
+        <span class="foot-logo logo-badge">
+          <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+            <circle cx="19" cy="19" r="18" stroke="#c6a15b" stroke-width="1"/>
+            <text x="19" y="27" font-family="Georgia,serif" font-size="24" font-weight="700" fill="#ddbf82" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name" style="font-size:28px;display:block">Yohan Barber<small style="color:var(--gold)">Barbería · Miami</small></span>
+        <p style="margin-top:16px">El arte del corte y la barba. Reserva tu experiencia de barbería premium.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navegación</h4>
+        <a href="#about">El barbero</a>
+        <a href="#services">Servicios</a>
+        <a href="#gallery">Galería</a>
+        <a href="#reviews">Reseñas</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <a href="tel:+17868656876">(786) 865-6876</a>
+        <a href="https://wa.me/17868656876" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://instagram.com/yohan_barber_pinar" id="igFoot" target="_blank" rel="noopener">Instagram</a>
+        <p>Miami, Florida</p>
+      </div>
+      <div class="foot-col">
+        <h4>Horario</h4>
+        <p>Lun – Vie · 9:00–19:00</p>
+        <p>Sábado · 9:00–17:00</p>
+        <p>Domingo · Cerrado</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Yohan Barber. Todos los derechos reservados.</span>
+      <span>Hecho con cariño en Miami ✦</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== FLOATING WHATSAPP ===================== -->
+<a class="wa-float" href="https://wa.me/17868656876?text=Hola!%20Quiero%20reservar%20una%20cita%20en%20Yohan%20Barber" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <span class="pulse"></span>
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.043zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const menu = document.getElementById('mobileMenu');
+  document.getElementById('burger').addEventListener('click', () => menu.classList.add('open'));
+  document.getElementById('closeMenu').addEventListener('click', () => menu.classList.remove('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (Math.min(i % 4, 3) * 0.08) + 's';
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>
+
