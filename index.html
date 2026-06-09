@@ -379,7 +379,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a href="#top" class="brand">
-      <img class="brand-mark" src="images/logo.jpeg" alt="Yohan Barber" style="width:48px;height:48px;box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(0,0,0,0.3);border-radius:50%;object-fit:cover;">
+      <img class="brand-mark" src="images/logo.jpeg" alt="Yohan Barber" style="width:48px;height:48px;object-fit:contain;">
       <span class="brand-name">Yohan Barber<small>Barbería · Miami</small></span>
     </a>
     <nav class="links">
@@ -412,7 +412,7 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
-      <img class="hero-badge" src="images/logo.jpeg" alt="Yohan Barber" style="width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px var(--line),0 12px 34px rgba(0,0,0,0.45);margin-bottom:28px;display:block;">
+      <img class="hero-badge" src="images/logo.jpeg" alt="Yohan Barber" style="width:96px;height:96px;object-fit:contain;margin-bottom:28px;display:block;">
       <span class="eyebrow">Barbería de autor · Miami</span>
       <h1>Tradición, <em>estilo</em><br>y elegancia.</h1>
       <p class="lead">Cortes a medida, fades impecables y afeitado clásico a navaja. Una experiencia de barbería pensada al detalle.</p>
@@ -621,7 +621,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-col" style="max-width:300px">
-        <img class="foot-logo" src="images/logo.jpeg" alt="Yohan Barber" style="width:66px;height:66px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px var(--line);margin-bottom:16px;display:block;">
+        <img class="foot-logo" src="images/logo.jpeg" alt="Yohan Barber" style="width:66px;height:66px;object-fit:contain;margin-bottom:16px;display:block;">
         <span class="brand-name" style="font-size:28px;display:block">Yohan Barber<small style="color:var(--gold)">Barbería · Miami</small></span>
         <p style="margin-top:16px">El arte del corte y la barba. Reserva tu experiencia de barbería premium.</p>
       </div>
@@ -660,6 +660,27 @@
 </a>
 
 <script>
+  // Remove black background from logo images
+  function removeBlackBg(img) {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < data.data.length; i += 4) {
+      const r = data.data[i], g = data.data[i+1], b = data.data[i+2];
+      const brightness = (r + g + b) / 3;
+      if (brightness < 60) data.data[i+3] = 0;
+    }
+    ctx.putImageData(data, 0, 0);
+    img.src = canvas.toDataURL('image/png');
+  }
+  document.querySelectorAll('img[src="images/logo.jpeg"]').forEach(img => {
+    if (img.complete) removeBlackBg(img);
+    else img.addEventListener('load', () => removeBlackBg(img));
+  });
+
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
   onScroll();
