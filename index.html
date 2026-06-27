@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yohan Barber — Miami</title>
+<title>Yohan Barber — Barbería Premium · Miami</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+
+<!-- Open Graph -->
+<meta property="og:title"       content="Yohan Barber — Barbería Premium · Miami">
+<meta property="og:description" content="Cortes a medida, fades impecables y afeitado clásico a navaja. Reserva tu cita por WhatsApp.">
+<meta property="og:image"       content="https://jose-1998.github.io/yohan-barber/images/hero.jpeg">
+<meta property="og:url"         content="https://jose-1998.github.io/yohan-barber/">
+<meta property="og:type"        content="website">
+<meta name="twitter:card"       content="summary_large_image">
+<meta name="description"        content="Cortes a medida, fades impecables y afeitado clásico a navaja en Miami. Reserva tu cita por WhatsApp al (786) 865-6876.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -332,6 +345,11 @@
   /* Mobile menu panel */
   .mobile-menu { display: none; }
 
+  /* Loader animations */
+  @keyframes ldr-spin { to { transform: rotate(360deg); } }
+  @keyframes ldr-cw   { to { transform: rotate( 360deg); } }
+  @keyframes ldr-ccw  { to { transform: rotate(-360deg); } }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
     .strip-track, .wa-float .pulse { animation: none; }
@@ -374,6 +392,43 @@
 </style>
 </head>
 <body>
+
+<!-- ===================== LOADER ===================== -->
+<div id="page-loader" style="
+  position:fixed;inset:0;z-index:9999;
+  background:#f5f1e8;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .6s ease;
+">
+  <div style="position:relative;width:200px;height:200px;display:flex;align-items:center;justify-content:center;">
+    <!-- Whirl SVG -->
+    <svg width="260" height="260" viewBox="0 0 260 260" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
+      <g style="animation:ldr-cw 5s linear infinite;transform-origin:130px 130px">
+        <path d="M130,130 Q200,50 242,130 Q200,210 130,130" stroke="#18221c" stroke-width="1.4" opacity="0.16" fill="none"/>
+        <path d="M130,130 Q60,210 18,130 Q60,50 130,130"   stroke="#18221c" stroke-width="1.4" opacity="0.16" fill="none"/>
+        <path d="M130,130 Q60,50 130,18 Q200,50 130,130"   stroke="#18221c" stroke-width="0.9" opacity="0.10" fill="none"/>
+        <path d="M130,130 Q200,210 130,242 Q60,210 130,130" stroke="#18221c" stroke-width="0.9" opacity="0.10" fill="none"/>
+      </g>
+      <g style="animation:ldr-cw 9s linear infinite;transform-origin:130px 130px">
+        <ellipse cx="130" cy="130" rx="120" ry="120" stroke="#18221c" stroke-width="0.8" opacity="0.10" stroke-dasharray="5 20" fill="none"/>
+      </g>
+      <g style="animation:ldr-ccw 6.5s linear infinite;transform-origin:130px 130px">
+        <ellipse cx="130" cy="130" rx="120" ry="32" stroke="#18221c" stroke-width="1" opacity="0.13" stroke-dasharray="10 14" fill="none"/>
+      </g>
+      <g style="animation:ldr-cw 4.5s linear infinite;transform-origin:130px 130px">
+        <ellipse cx="130" cy="130" rx="32" ry="120" stroke="#18221c" stroke-width="1" opacity="0.13" stroke-dasharray="10 14" fill="none"/>
+      </g>
+      <g style="animation:ldr-ccw 3.8s linear infinite;transform-origin:130px 130px">
+        <circle cx="250" cy="130" r="3"   fill="#18221c" opacity="0.28"/>
+        <circle cx="10"  cy="130" r="3"   fill="#18221c" opacity="0.28"/>
+        <circle cx="130" cy="250" r="2.2" fill="#18221c" opacity="0.20"/>
+        <circle cx="130" cy="10"  r="2.2" fill="#18221c" opacity="0.20"/>
+      </g>
+    </svg>
+    <!-- Logo (black removed via canvas) -->
+    <canvas id="ldr-logo" width="120" height="120" style="position:relative;z-index:2;animation:ldr-spin 12s linear infinite;border-radius:50%"></canvas>
+  </div>
+</div>
 
 <!-- ===================== NAV ===================== -->
 <header class="nav" id="nav">
@@ -430,7 +485,10 @@
       </div>
     </div>
     <div class="hero-photo reveal">
-      <img src="images/hero.jpeg" alt="Yohan Barber en acción" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;">
+      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <source src="images/hero.mp4" type="video/mp4">
+        <img src="images/hero.jpeg" alt="Yohan Barber en acción" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      </video>
     </div>
   </div>
 </section>
@@ -680,6 +738,31 @@
     if (img.complete) removeBlackBg(img);
     else img.addEventListener('load', () => removeBlackBg(img));
   });
+
+  // Loader — remove black bg from logo, then hide after page loads
+  (function() {
+    const loaderEl = document.getElementById('page-loader');
+    const ldrCanvas = document.getElementById('ldr-logo');
+    const ldrCtx = ldrCanvas.getContext('2d');
+    const ldrImg = new Image();
+    ldrImg.src = 'images/logo.jpeg';
+    ldrImg.onload = () => {
+      ldrCanvas.width = ldrImg.naturalWidth;
+      ldrCanvas.height = ldrImg.naturalHeight;
+      ldrCtx.drawImage(ldrImg, 0, 0);
+      const d = ldrCtx.getImageData(0, 0, ldrCanvas.width, ldrCanvas.height);
+      for (let i = 0; i < d.data.length; i += 4) {
+        if ((d.data[i] + d.data[i+1] + d.data[i+2]) / 3 < 60) d.data[i+3] = 0;
+      }
+      ldrCtx.putImageData(d, 0, 0);
+    };
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loaderEl.style.opacity = '0';
+        setTimeout(() => loaderEl.style.display = 'none', 650);
+      }, 800);
+    });
+  })();
 
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
