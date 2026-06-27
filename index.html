@@ -394,39 +394,32 @@
 <body>
 
 <!-- ===================== LOADER ===================== -->
-<div id="page-loader" style="
-  position:fixed;inset:0;z-index:9999;
-  background:#f5f1e8;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .6s ease;
-">
-  <div style="position:relative;width:200px;height:200px;display:flex;align-items:center;justify-content:center;">
-    <!-- Whirl SVG -->
-    <svg width="260" height="260" viewBox="0 0 260 260" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
-      <g style="animation:ldr-cw 5s linear infinite;transform-origin:130px 130px">
-        <path d="M130,130 Q200,50 242,130 Q200,210 130,130" stroke="#18221c" stroke-width="1.4" opacity="0.16" fill="none"/>
-        <path d="M130,130 Q60,210 18,130 Q60,50 130,130"   stroke="#18221c" stroke-width="1.4" opacity="0.16" fill="none"/>
-        <path d="M130,130 Q60,50 130,18 Q200,50 130,130"   stroke="#18221c" stroke-width="0.9" opacity="0.10" fill="none"/>
-        <path d="M130,130 Q200,210 130,242 Q60,210 130,130" stroke="#18221c" stroke-width="0.9" opacity="0.10" fill="none"/>
+<div id="page-loader" style="position:fixed;inset:0;z-index:9999;background:#f5f1e8;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;">
+  <div style="position:relative;width:300px;height:300px;display:flex;align-items:center;justify-content:center;">
+    <svg width="300" height="300" viewBox="0 0 300 300" fill="none" style="position:absolute;inset:0;">
+      <!-- outer dashed ring -->
+      <g style="animation:ldr-cw 9s linear infinite;transform-origin:150px 150px">
+        <circle cx="150" cy="150" r="140" stroke="#b8a46e" stroke-width="1.2" opacity="0.4" stroke-dasharray="7 22" fill="none"/>
       </g>
-      <g style="animation:ldr-cw 9s linear infinite;transform-origin:130px 130px">
-        <ellipse cx="130" cy="130" rx="120" ry="120" stroke="#18221c" stroke-width="0.8" opacity="0.10" stroke-dasharray="5 20" fill="none"/>
+      <!-- tilted orbit -->
+      <g style="animation:ldr-ccw 5.5s linear infinite;transform-origin:150px 150px">
+        <ellipse cx="150" cy="150" rx="140" ry="38" stroke="#18221c" stroke-width="1.1" opacity="0.22" stroke-dasharray="9 14" fill="none"/>
       </g>
-      <g style="animation:ldr-ccw 6.5s linear infinite;transform-origin:130px 130px">
-        <ellipse cx="130" cy="130" rx="120" ry="32" stroke="#18221c" stroke-width="1" opacity="0.13" stroke-dasharray="10 14" fill="none"/>
+      <!-- spiral arms -->
+      <g style="animation:ldr-cw 4.5s linear infinite;transform-origin:150px 150px">
+        <path d="M150,150 Q220,62 278,150 Q220,238 150,150" stroke="#b8a46e" stroke-width="1.5" opacity="0.28" fill="none"/>
+        <path d="M150,150 Q80,238 22,150 Q80,62 150,150"   stroke="#b8a46e" stroke-width="1.5" opacity="0.28" fill="none"/>
       </g>
-      <g style="animation:ldr-cw 4.5s linear infinite;transform-origin:130px 130px">
-        <ellipse cx="130" cy="130" rx="32" ry="120" stroke="#18221c" stroke-width="1" opacity="0.13" stroke-dasharray="10 14" fill="none"/>
-      </g>
-      <g style="animation:ldr-ccw 3.8s linear infinite;transform-origin:130px 130px">
-        <circle cx="250" cy="130" r="3"   fill="#18221c" opacity="0.28"/>
-        <circle cx="10"  cy="130" r="3"   fill="#18221c" opacity="0.28"/>
-        <circle cx="130" cy="250" r="2.2" fill="#18221c" opacity="0.20"/>
-        <circle cx="130" cy="10"  r="2.2" fill="#18221c" opacity="0.20"/>
+      <!-- orbiting gold dots -->
+      <g style="animation:ldr-ccw 3.8s linear infinite;transform-origin:150px 150px">
+        <circle cx="290" cy="150" r="3.5" fill="#b8a46e" opacity="0.65"/>
+        <circle cx="10"  cy="150" r="3.5" fill="#b8a46e" opacity="0.65"/>
+        <circle cx="150" cy="290" r="2.5" fill="#18221c" opacity="0.35"/>
+        <circle cx="150" cy="10"  r="2.5" fill="#18221c" opacity="0.35"/>
       </g>
     </svg>
-    <!-- Logo (black removed via canvas) -->
-    <canvas id="ldr-logo" width="120" height="120" style="position:relative;z-index:2;animation:ldr-spin 12s linear infinite;border-radius:50%"></canvas>
+    <!-- Logo spinning in center -->
+    <img src="images/logo.jpeg" id="ldr-logo" alt="" style="position:relative;z-index:2;width:160px;height:160px;border-radius:50%;object-fit:cover;animation:ldr-spin 10s linear infinite;">
   </div>
 </div>
 
@@ -739,23 +732,9 @@
     else img.addEventListener('load', () => removeBlackBg(img));
   });
 
-  // Loader — remove black bg from logo, then hide after page loads
+  // Loader — hide after page loads
   (function() {
     const loaderEl = document.getElementById('page-loader');
-    const ldrCanvas = document.getElementById('ldr-logo');
-    const ldrCtx = ldrCanvas.getContext('2d');
-    const ldrImg = new Image();
-    ldrImg.src = 'images/logo.jpeg';
-    ldrImg.onload = () => {
-      ldrCanvas.width = ldrImg.naturalWidth;
-      ldrCanvas.height = ldrImg.naturalHeight;
-      ldrCtx.drawImage(ldrImg, 0, 0);
-      const d = ldrCtx.getImageData(0, 0, ldrCanvas.width, ldrCanvas.height);
-      for (let i = 0; i < d.data.length; i += 4) {
-        if ((d.data[i] + d.data[i+1] + d.data[i+2]) / 3 < 60) d.data[i+3] = 0;
-      }
-      ldrCtx.putImageData(d, 0, 0);
-    };
     window.addEventListener('load', () => {
       setTimeout(() => {
         loaderEl.style.opacity = '0';
